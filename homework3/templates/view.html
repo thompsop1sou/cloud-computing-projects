@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>View all Entries</h2>
+    {% for entry in entries %}
+        <p class=entry>
+            {% for key, value in entry.items() %}
+            {{key.replace('_', ' ').capitalize()}}: {{value}}<br>
+            {% endfor %}
+        </p>
+    {% endfor %}
+
+{% endblock %}

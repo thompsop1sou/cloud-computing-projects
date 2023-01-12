@@ -1,6 +1,22 @@
 # cs356-w23-peter-thompson-940431152
 
+## For Homework 1
 
+This section has been added to the default readme for the purposes of homework 1.
+
+### Unordered List
+
+Here is an unordered list:
+- list item 1
+- list item 2
+- list item 3
+
+### Ordered List
+
+Here is an ordered list:
+1. list item 1
+2. list item 2
+3. list item 3
 
 ## Getting started
 
