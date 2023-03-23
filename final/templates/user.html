@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>User Info</h2>
+    <p>Name: {{userinfo['username']}}</p>
+    <p>Date Created: {{userinfo['joined']}}</p>
+    <p><a href="{{url_for('index')}}">Logout</a></p>
+    <h2>Workouts</h2>
+    {% for workout in workouts %}
+    <p>Date: {{workout['date']}}, Exercises: {{workout['exercises']}}</p>
+    {% endfor %}
+{% endblock %}
