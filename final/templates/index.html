@@ -1,11 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>Select an Existing User</h2>
-    {% for username in usernames %}
-    <p><a href="{{url_for('user')}}?username={{username}}">{{username}}</a></p>
-    {% endfor %}
-    <h2>Create a New User</h2>
-    <form action="{{url_for('index')}}" method=post>
-        Name: <input type="text" name="username"><input type="submit" value="Create">
+    <h2>New User</h2>
+    <form method="post">
+        <input type="text" name="username" placeholder="Enter a new username..."><input type="submit" name="submit" value="Create">
     </form>
+    <h2>Existing Users</h2>
+    {% for user in users %}
+    <form method="post">
+        <input type="hidden" name="username" value="{{user['username']}}">
+        {{user['username']}} (Created on {{user['created_date']}}) <input type="submit" name="submit" value="Login">
+    </form>
+    {% endfor %}
 {% endblock %}

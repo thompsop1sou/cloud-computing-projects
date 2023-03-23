@@ -1,11 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
     <h2>User Info</h2>
-    <p>Name: {{userinfo['username']}}</p>
-    <p>Date Created: {{userinfo['joined']}}</p>
-    <p><a href="{{url_for('index')}}">Logout</a></p>
-    <h2>Workouts</h2>
+    <form method="post">
+        <label for="username">Username:</label> <input type="text" id="username" name="username" value="{{user_info['username']}}" {{edit}}> 
+        <label for="created_date">Date Created:</label> <input type="date" id="created_date" name="created_date" value="{{user_info['created_date']}}" {{edit}}>
+        <input type="hidden" name="section" value="user">
+        {% if edit == '' %}
+        <input type="submit" name="submit" value="Delete">
+        <input type="submit" name="submit" value="Update">
+        {% else %}
+        <input type="submit" name="submit" value="Edit">
+        {% endif %}
+        <br><input type="submit" name="submit" value="Logout">
+    </form>
+    <h2>New Workout</h2>
+    <form method="post">
+        <input type="hidden" name="section" value="workout">
+        <input type="date" name="date" value="{{today_date}}"><input type="submit" name="submit" value="Create">
+    </form>
+    <h2>Old Workouts</h2>
     {% for workout in workouts %}
-    <p>Date: {{workout['date']}}, Exercises: {{workout['exercises']}}</p>
+    <form method="post">
+        Date: {{workout['date']}}, Exercises: {{workout['exercises']}}
+        <input type="hidden" name="section" value="workout">
+        <input type="hidden" name="date" value="{{workout['date']}}">
+        <input type="submit" name="submit" value="Edit"><input type="submit" name="submit" value="Delete"><input type="submit" name="submit" value="Clone">
+    </form>
     {% endfor %}
 {% endblock %}
