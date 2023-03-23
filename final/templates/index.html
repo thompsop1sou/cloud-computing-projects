@@ -2,13 +2,15 @@
 {% block content %}
     <h2>New User</h2>
     <form method="post">
-        <input type="text" name="username" placeholder="Enter a new username..."><input type="submit" name="submit" value="Create">
+        <input type="text" name="username" placeholder="Enter a new username...">
+        <input type="submit" name="submit" value="Create User">
     </form>
     <h2>Existing Users</h2>
     {% for user in users %}
     <form method="post">
         <input type="hidden" name="username" value="{{user['username']}}">
-        {{user['username']}} (Created on {{user['created_date']}}) <input type="submit" name="submit" value="Login">
+        <label for="{{user['username']}}">{{user['username']}} (Created on {{user['created_date']}})</label>
+        <input type="submit" id="{{user['username']}}" name="submit" value="Login">
     </form>
     {% endfor %}
 {% endblock %}

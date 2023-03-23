@@ -27,7 +27,7 @@ class model(Model):
         Will filter returned entries based on params username and date
         :return: List of dictionaries
         """
-        selected = self.entries.copy()
+        selected = [entry for entry in self.entries if entry['exercises'] != 'usercreated']
         if username != None:
             index = 0
             while index < len(selected):
@@ -44,23 +44,33 @@ class model(Model):
                     index = index + 1
         return selected
 
-    def insert(self, username, date, exercises):
+    def insert_user(self, username, date):
+        """
+        Inserts a new user into the database
+        :param username: string
+        :param date: string
+        :return: True
+        """
+        new_entry = {'username':username, 'date':date, 'exercises':'usercreated'}
+        if username in [entry['username'] for entry in self.entries]:
+            return False
+        self.entries.append(new_entry)
+        return True
+
+    def insert_workout(self, username, date, exercises):
         """
         Appends a new list of values representing a new workout
         Ensures that there does not already exist an entry with a matching username and date
         :param username: string
         :param date: string
         :param exercises: list (of dictionaries)
-        :return: True
+        :return: True if workout successfully inserted
         """
         new_entry = {'username':username, 'date':date, 'exercises':exercises}
-        found = False
         for entry in self.entries:
             if new_entry['username'] == entry['username'] and new_entry['date'] == entry['date'] and entry['exercises'] != 'usercreated':
-                found = True
-                break
-        if not found:
-            self.entries.append(new_entry)
+                return False
+        self.entries.append(new_entry)
         return True
 
     def delete_user(self, username):
@@ -113,7 +123,7 @@ class model(Model):
             print(self.entries)
             return True
 
-    def update_workout(self, username, old_date, new_date, new_exercises):
+    def update_workout(self, username, old_date, new_date, new_exercises=None):
         """
         Updates entries matching username and old_date with the new info
         :param username: string
@@ -122,9 +132,8 @@ class model(Model):
         :param new_exercises: list (of dictionaries)
         :return: True if successful
         """
-
         for i in range(len(self.entries)):
             if self.entries[i]['username'] == username and self.entries[i]['date'] == old_date and self.entries[i]['exercises'] != 'usercreated':
-                self.entries[i]['date'] == new_date
+                self.entries[i]['date'] = new_date
                 if new_exercises != None:
-                    self.entries[i]['exercises'] == new_exercises
+                    self.entries[i]['exercises'] = new_exercises

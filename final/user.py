@@ -21,8 +21,7 @@ class User(MethodView):
             entries = model.select_workout(username=username)
             workouts = []
             for entry in entries:
-                if entry['exercises'] != 'usercreated':
-                    workouts.append({'date':entry['date'], 'exercises':[exercise['name'] for exercise in entry['exercises']]})
+                workouts.append({'date':entry['date'], 'exercises':str([exercise['name'] for exercise in entry['exercises']])})
             # Sort the workouts on their date
             workouts.sort(reverse=True, key=(lambda workout: workout['date']))
             # Render the user web page
@@ -33,29 +32,29 @@ class User(MethodView):
             return redirect(url_for('index'))
 
     def post(self):
-        # If working on the user section...
+        # If working with the user section...
         if request.form['section'] == 'user':
             # Get some basic variables
             username = request.args['username']
             model = wo_model.get_model()
             # Enabling edits to user info
-            if request.form['submit'] == 'Edit':
+            if request.form['submit'] == 'Edit User':
                 return redirect('{}?username={}&edit=True'.format(url_for('user'), username))
             # Updating user info
-            elif request.form['submit'] == 'Update':
+            elif request.form['submit'] == 'Update User':
                 success = model.update_user(old_username=username, new_username=request.form['username'], new_created_date=request.form['created_date'])
                 if success:
                     return redirect('{}?username={}'.format(url_for('user'), request.form['username']))
                 else:
                     return redirect('{}?username={}'.format(url_for('user'), username))
             # Deleting user
-            elif request.form['submit'] == 'Delete':
+            elif request.form['submit'] == 'Delete User':
                 model.delete_user(username=username)
                 return redirect(url_for('index'))
             # Logging out
             elif request.form['submit'] == 'Logout':
                 return redirect(url_for('index'))
-        # If working on the workout section...
+        # If working with the workout section...
         elif request.form['section'] == 'workout':
             # Get some basic variables
             username = request.args['username']
@@ -64,20 +63,15 @@ class User(MethodView):
             # If the date is not empty...
             if date != '':
                 # Creating a new workout
-                if request.form['submit'] == 'Create':
-                    model.insert(username=username, date=date, exercises=[])
+                if request.form['submit'] == 'Create Workout':
+                    model.insert_workout(username=username, date=date, exercises=[])
                     return redirect('{}?username={}'.format(url_for('user'), username))
                 # Editing an old workout
-                elif request.form['submit'] == 'Edit':
-                    return redirect('{}?username={}'.format(url_for('user'), username))
-                    #return redirect('{}?username={}$date={}'.format(url_for('workout'), username, date))
-                # Deleting an old workout
-                elif request.form['submit'] == 'Delete':
-                    model.delete_workout(username=username, date=date)
-                    return redirect('{}?username={}'.format(url_for('user'), username))
+                elif request.form['submit'] == 'Edit Workout':
+                    return redirect('{}?username={}&date={}'.format(url_for('workout'), username, date))
                 # Cloning an old workout
-                elif request.form['submit'] == 'Clone':
-                    model.insert(username=username, date=str(get_date.today()), exercises=[])
+                elif request.form['submit'] == 'Clone Workout':
+                    model.insert_workout(username=username, date=str(get_date.today()), exercises=[])
                     return redirect('{}?username={}'.format(url_for('user'), username))
             # If the date is emtpy...
             else:

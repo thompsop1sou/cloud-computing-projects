@@ -19,14 +19,22 @@ class Model():
         """
         pass
 
-    def insert(self, username, date, exercises):
+    def insert_user(self, username, date):
+        """
+        Inserts a new user into the database
+        :param username: string
+        :param date: string
+        :return: True
+        """
+        pass
+
+    def insert_workout(self, username, date, exercises):
         """
         Inserts entry into database
         :param username: string
         :param date: string
         :param exercises: list (of dictionaries)
         :return: True
-        :raises: Database errors on connection and insertion
         """
         pass
 
@@ -57,7 +65,7 @@ class Model():
         """
         pass
 
-    def update_workout(self, username, old_date, new_date, new_exercises):
+    def update_workout(self, username, old_date, new_date, new_exercises=None):
         """
         Updates entries matching username and old_date with the new info
         :param username: string

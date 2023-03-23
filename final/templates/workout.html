@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Workout Info</h2>
+    <form method="post">
+        <input type="hidden" name="section" value="workout">
+        <label for="username">Username:</label> <input type="text" id="username" name="username" value="{{workout_info['username']}}" disabled> 
+        <label for="date">Date:</label> <input type="date" id="date" name="date" value="{{workout_info['date']}}">
+        <input type="submit" name="submit" value="Update Workout">
+        <input type="submit" name="submit" value="Delete Workout">
+        <br><input type="submit" name="submit" value="Return to User">
+    </form>
+    <h2>Exercises</h2>
+    <h3>New</h3>
+    <form method="post">
+        <input type="hidden" name="section" value="exercise_search">
+        <label for="ex_name">Name:</label>
+        <input type="text" id="ex_name" name="ex_name" value="{{search_terms['name']}}">
+        <label for="ex_type">Type:</label>
+        <select id="ex_type" name="ex_type">
+            <option value=""></option>
+            {% for kind in search_options['kinds'] %}
+                {% if kind == search_terms['kind'] %}
+                <option value="{{kind}}" selected>{{kind}}</option>
+                {% else %}
+                <option value="{{kind}}">{{kind}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label for="ex_muscles">Muscle:</label>
+        <select id="ex_muscles" name="ex_muscles">
+            <option value=""></option>
+            {% for muscle in search_options['muscles'] %}
+                {% if muscle == search_terms['muscle'] %}
+                <option value="{{muscle}}" selected>{{muscle}}</option>
+                {% else %}
+                <option value="{{muscle}}">{{muscle}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label for="ex_difficulties">Difficulty:</label>
+        <select id="ex_difficulties" name="ex_difficulties">
+            <option value=""></option>
+            {% for difficulty in search_options['difficulties'] %}
+                {% if difficulty == search_terms['difficulty'] %}
+                <option value="{{difficulty}}" selected>{{difficulty}}</option>
+                {% else %}
+                <option value="{{difficulty}}">{{difficulty}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="submit" name="submit" value="Search">
+    </form>
+    {% for result in search_results %}
+        <p>blah</p>
+    {% endfor %}
+    <h3>Existing</h3>
+    {% for exercise in exercises %}
+        <p>blah</p>
+    {% endfor %}
+{% endblock %}

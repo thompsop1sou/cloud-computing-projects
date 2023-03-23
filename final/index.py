@@ -20,13 +20,13 @@ class Index(MethodView):
         # If the username is not emtpy...
         if username != '':
             # If creating new user...
-            if request.form['submit'] == 'Create':
+            if request.form['submit'] == 'Create User':
                 # Get all the entries in the database with username
                 model = wo_model.get_model()
                 entries = model.select_user(username=username)
                 # If no entries exist, username is unique (valid), so create the new user
                 if len(entries) == 0:
-                    model.insert(username=username, date=str(date.today()), exercises='usercreated')
+                    model.insert_user(username=username, date=str(date.today()))
                 # Return to home page
                 return redirect(url_for('index'))
             # If logging in in to existing user...
