@@ -26,7 +26,7 @@ class User(MethodView):
             workouts.sort(reverse=True, key=(lambda workout: workout['date']))
             # Render the user web page
             return render_template('user.html', user_info=user_info, workouts=workouts, today_date=str(get_date.today()), edit=edit)
-        # If there are no entries
+        # If there are no entries...
         else:
             # Invalid username, return to the home page
             return redirect(url_for('index'))
