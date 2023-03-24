@@ -1,2 +1,4 @@
 flask
 requests
+google-cloud-datastore
+gunicorn

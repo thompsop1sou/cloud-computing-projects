@@ -4,7 +4,7 @@ class Model():
         """
         Returns user info
         :param username: string
-        :return: dictionary
+        :return: List of dictionaries
         """
         pass
 
@@ -24,7 +24,7 @@ class Model():
         Inserts a new user into the database
         :param username: string
         :param date: string
-        :return: True
+        :return: True if successful
         """
         pass
 
@@ -34,7 +34,7 @@ class Model():
         :param username: string
         :param date: string
         :param exercises: list (of dictionaries)
-        :return: True
+        :return: True if successful
         """
         pass
 
@@ -42,7 +42,7 @@ class Model():
         """
         Deletes all entries with username
         :param username: string
-        :return: True
+        :return: True if successful
         """
         pass
 
@@ -51,7 +51,7 @@ class Model():
         Deletes all matching entries from the database
         :param username: string
         :param date: string
-        :return: True
+        :return: True if successful
         """
         pass
 
@@ -61,7 +61,7 @@ class Model():
         :param old_username: string
         :param new_username: string
         :param new_created_date: string
-        :return: True
+        :return: True if successful
         """
         pass
 
@@ -73,6 +73,6 @@ class Model():
         :param new_username: string
         :param new_date: string
         :param new_exercises: list (of dictionaries)
-        :return: True
+        :return: True if successful
         """
         pass
