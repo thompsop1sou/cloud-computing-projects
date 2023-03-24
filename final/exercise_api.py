@@ -7,7 +7,7 @@ class ExerciseAPI:
     def __init__(self):
         self.api_key = os.getenv('EXERCISE_API_KEY')
         self.base_url = 'https://api.api-ninjas.com/v1/exercises'
-        self.kinds = ['cardio', 'olympic_weightlifting', 'plyometrics',
+        self.types = ['cardio', 'olympic_weightlifting', 'plyometrics',
              'powerlifting', 'strength', 'stretching', 'strongman']
         self.muscles = ['abdominals', 'abductors', 'adductors', 'biceps',
                'calves', 'chest', 'forearms', 'glutes',
@@ -15,7 +15,7 @@ class ExerciseAPI:
                'neck', 'quadriceps', 'traps', 'triceps']
         self.difficulties = ['beginner', 'intermediate', 'expert']
 
-    def call(self, api_params, include_instr = False):
+    def call(self, api_params, max_offset=1, include_instr = False):
         api_url = self.base_url
         if api_url[-1] != '?':
             api_url = api_url + '?'
@@ -25,7 +25,7 @@ class ExerciseAPI:
         results = []
         errors = 0
         offset = 0
-        while offset < 10:
+        while offset < max_offset:
             response = requests.get('{}&offset={}'.format(api_url, offset*10), headers={'X-Api-Key': self.api_key})
             if response.status_code == requests.codes.ok:
                 errors = 0

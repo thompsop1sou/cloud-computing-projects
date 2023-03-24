@@ -21,7 +21,7 @@ class User(MethodView):
             entries = model.select_workout(username=username)
             workouts = []
             for entry in entries:
-                workouts.append({'date':entry['date'], 'exercises':str([exercise['name'] for exercise in entry['exercises']])})
+                workouts.append({'date':entry['date'], 'exercises':str([exercise['ex_name'] for exercise in entry['exercises']])})
             # Sort the workouts on their date
             workouts.sort(reverse=True, key=(lambda workout: workout['date']))
             # Render the user web page
@@ -71,7 +71,8 @@ class User(MethodView):
                     return redirect('{}?username={}&date={}'.format(url_for('workout'), username, date))
                 # Cloning an old workout
                 elif request.form['submit'] == 'Clone Workout':
-                    model.insert_workout(username=username, date=str(get_date.today()), exercises=[])
+                    old_workout = model.select_workout(username=username, date=date)[0]
+                    model.insert_workout(username=username, date=str(get_date.today()), exercises=old_workout['exercises'])
                     return redirect('{}?username={}'.format(url_for('user'), username))
             # If the date is emtpy...
             else:

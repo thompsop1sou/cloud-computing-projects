@@ -7,10 +7,10 @@
         <label for="date">Date:</label> <input type="date" id="date" name="date" value="{{workout_info['date']}}">
         <input type="submit" name="submit" value="Update Workout">
         <input type="submit" name="submit" value="Delete Workout">
-        <br><input type="submit" name="submit" value="Return to User">
+        <br><br><input type="submit" name="submit" value="Return to User">
     </form>
     <h2>Exercises</h2>
-    <h3>New</h3>
+    <h3>Search for New</h3>
     <form method="post">
         <input type="hidden" name="section" value="exercise_search">
         <label for="ex_name">Name:</label>
@@ -18,16 +18,16 @@
         <label for="ex_type">Type:</label>
         <select id="ex_type" name="ex_type">
             <option value=""></option>
-            {% for kind in search_options['kinds'] %}
-                {% if kind == search_terms['kind'] %}
-                <option value="{{kind}}" selected>{{kind}}</option>
+            {% for typ in search_options['types'] %}
+                {% if typ == search_terms['type'] %}
+                <option value="{{typ}}" selected>{{typ}}</option>
                 {% else %}
-                <option value="{{kind}}">{{kind}}</option>
+                <option value="{{typ}}">{{typ}}</option>
                 {% endif %}
             {% endfor %}
         </select>
-        <label for="ex_muscles">Muscle:</label>
-        <select id="ex_muscles" name="ex_muscles">
+        <label for="ex_muscle">Muscle:</label>
+        <select id="ex_muscle" name="ex_muscle">
             <option value=""></option>
             {% for muscle in search_options['muscles'] %}
                 {% if muscle == search_terms['muscle'] %}
@@ -37,8 +37,8 @@
                 {% endif %}
             {% endfor %}
         </select>
-        <label for="ex_difficulties">Difficulty:</label>
-        <select id="ex_difficulties" name="ex_difficulties">
+        <label for="ex_difficulty">Difficulty:</label>
+        <select id="ex_difficulty" name="ex_difficulty">
             <option value=""></option>
             {% for difficulty in search_options['difficulties'] %}
                 {% if difficulty == search_terms['difficulty'] %}
@@ -48,13 +48,36 @@
                 {% endif %}
             {% endfor %}
         </select>
-        <input type="submit" name="submit" value="Search">
+        <input type="submit" name="submit" value="Search for Exercises">
     </form>
+    <br>
     {% for result in search_results %}
-        <p>blah</p>
+        <form method="post">
+            <input type="hidden" name="section" value="exercise_select">
+            <input type="hidden" name="ex_name" value="{{result['name']}}">
+            <label for="ex_disp_name">Name:</label> <input type="text" id="ex_disp_name" name="ex_disp_name" value="{{result['name']}}" disabled>
+            <label for="ex_type">Type:</label> <input type="text" id="ex_type" name="ex_type" value="{{result['type']}}" disabled>
+            <label for="ex_muscle">Muscle:</label> <input type="text" id="ex_muscle" name="ex_muscle" value="{{result['muscle']}}" disabled>
+            <label for="ex_equipment">Equipment:</label> <input type="text" id="ex_equipment" name="ex_equipment" value="{{result['equipment']}}" disabled>
+            <label for="ex_difficulty">Difficulty:</label> <input type="text" id="ex_difficulty" name="ex_difficulty" value="{{result['difficulty']}}" disabled>
+            <input type="submit" name="submit" value="Select Exercise">
+        </form>
     {% endfor %}
+    <h3>Create New</h3>
+    <form method="post">
+        <input type="hidden" name="section" value="exercise_select">
+        <label for="ex_name">Name:</label> <input type="text" id="ex_name" name="ex_name">
+        <input type="submit" name="submit" value="Create Exercise">
+    </form>
     <h3>Existing</h3>
     {% for exercise in exercises %}
-        <p>blah</p>
+        <form method="post">
+            <input type="hidden" name="section" value="exercise_edit">
+            <label for="ex_name">Name:</label> <input type="text" id="ex_name" name="ex_name" value="{{exercise['ex_name']}}">
+            <label for="resistance">Resistance:</label> <input type="number" id="resistance" name="resistance" min="0" value="{{exercise['resistance']}}">
+            <label for="repititions">Repititions:</label> <input type="number" id="repititions" name="repititions" min="0" value="{{exercise['repititions']}}">
+            <input type="submit" name="submit" value="Update Exercise">
+            <input type="submit" name="submit" value="Delete Exercise">
+        </form>
     {% endfor %}
 {% endblock %}
